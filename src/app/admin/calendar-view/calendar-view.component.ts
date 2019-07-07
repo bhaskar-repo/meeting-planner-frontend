@@ -233,7 +233,10 @@ export class CalendarViewComponent implements OnInit {
       (apiResponse) => {
         if (this._global.checkResStatus(apiResponse)) {
           let meetings = apiResponse.data;
-          meetings = this.isOverLappingMeetings(meetings);
+          if (meetings.length > 1) {
+            meetings = this.isOverLappingMeetings(meetings);
+          }
+         
           meetings.forEach((meeting) => {
             let event = {
               meetingId: meeting.meetingId,

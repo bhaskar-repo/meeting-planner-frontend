@@ -380,7 +380,9 @@ export class DashboardComponent implements OnInit {
         if (this._global.checkResStatus(apiResponse)) {
 
           let meetings = apiResponse.data//.filter(meeting => new Date(meeting.start.toString()).getDay() >= new Date().getDay());
-          meetings = this.isOverLappingMeetings(meetings);
+          if (meetings.length > 1) {
+            meetings = this.isOverLappingMeetings(meetings);
+          }
           let count = 0;
           meetings.forEach(meeting => {
             let event = {
