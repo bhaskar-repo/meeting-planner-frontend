@@ -1,0 +1,10 @@
+li:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+body {
+    height: 650px;
+    background-image: url('/assets/background.webp');
+    padding: 1.5rem;
+  }

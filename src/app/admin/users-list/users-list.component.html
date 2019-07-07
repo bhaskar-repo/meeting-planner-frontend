@@ -1,0 +1,34 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+  <main role="main">
+    <div class="row mt-5 shadow-lg">
+      <div class="col-sm">
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let user of allNormalUsers;let i = index"
+            (click)=navigateToUserscalendar(user)>
+          
+              <ul class="list-inline">
+                  <li class="list-inline-item">
+                      <app-first-char [firstChar]="user.fullName[0]"></app-first-char>
+                  </li>
+                  <li class="list-inline-item">
+                      <label>{{user.fullName}} </label>
+                  </li>
+                  <li class="list-inline-item">
+                      <small class="text-muted"> {{user.countryName}}</small>
+                  </li>
+              </ul>
+           
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+label {
+    font-weight: bold;
+}
+
+span {
+    color: red;
+  }
+
+.ng-valid:not(form)  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+
+  @media only screen and (max-width: 300px) {
+    .minus-header {
+      padding-top: 7rem;
+    }
+  }
+
+  body {
+    height: 650px;
+    background-image: url('/assets/background.webp');
+    padding: 1.5rem;
+  }

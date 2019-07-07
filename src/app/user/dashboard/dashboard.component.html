@@ -1,0 +1,227 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+  <header role="heading">
+    <app-header [userName]="userName"></app-header>
+  </header>
+  <div class="container-fluid">
+    <div class="row minus-header">
+      <div class="col-md">
+          <i class="fas fa-arrow-left mouse-pointer" (click) = "goBack()"> Back</i>
+      </div>
+      
+    </div>
+    <div class="row text-center">
+      
+      <div class="col-md-4">
+        <div class="btn-group">
+          <button class="btn btn-primary" (click)="decrement()" [disabled]="prevBtnDisabled">
+            Previous
+          </button>
+          <button class="btn btn-outline-secondary" (click)="today()">Today</button>
+          <button class="btn btn-primary" (click)="increment()" [disabled]="nextBtnDisabled">
+            Next
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      </div>
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div class="btn btn-primary mouse-pointer" (click)="changeView('month')" [class.active]="view === 'month'">
+            Month
+          </div>
+          <div class="btn btn-primary mouse-pointer" (click)="changeView('week')" [class.active]="view === 'week'">
+            Week
+          </div>
+          <div class="btn btn-primary mouse-pointer" (click)="changeView('day')" [class.active]="view === 'day'">
+            Day
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div [ngSwitch]="view">
+      <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+        (beforeViewRender)="beforeMonthViewRender($event)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-day-view>
+    </div>
+
+    <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+
+    <br /><br />
+
+    <button class="btn btn-primary btn-sm button-position" *ngIf="isAdmin" (click)="addNewMeeting()">
+      Add new
+    </button>
+    <div class="clearfix"></div>
+
+    <ng-template #notifyMe let-close="close">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-bell">Notification</i> Meeting in a minute</h5>
+          <button type="button" class="close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card" style="width: 17rem;">
+            <img src="assets/meeting.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">Title : {{selectedMeetingModal.title}}</h5>
+              <p class="card-text font-weight-bold">Organized by: {{selectedMeetingModal.createdBy}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item font-weight-bold">Starts at: {{selectedMeetingModal.start | date: 'dd/MM/yyyy HH:mm:ss'}}</li>
+              <li class="list-group-item font-weight-bold">Ends at: {{selectedMeetingModal.end | date: 'dd/MM/yyyy HH:mm:ss'}}</li>
+              <li class="list-group-item font-weight-bold">Purpose: {{selectedMeetingModal.purpose}}</li>
+              <li class="list-group-item font-weight-bold">Place: {{selectedMeetingModal.place}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" (click)="snoozeMeeting(selectedMeetingModal)">
+            Snooze
+          </button>
+          <button type="button" class="btn btn-outline-danger" (click)="dismissMeeting()">
+              Dismiss
+            </button>
+        </div>
+    </ng-template>
+
+    <ng-template #modalContent let-close="close">
+      <div *ngIf="selectedMeetingModal">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-bell"></i>You have a meeting</h5>
+          <button type="button" class="close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            Action:
+            <pre>{{ modalData?.action }}</pre>
+          </div>
+          <div>
+            Event:
+            <pre>{{ modalData?.event | json }}</pre>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="modalRef.hide()">
+            OK
+          </button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #modalAddMeeting let-close="close">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Meetitng</h5>
+        <button type="button" class="close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="detailForm">
+          <div class="form-group">
+            <label class="font-weight-bold">Selected Date: {{viewDate | date: 'dd/MM/yyyy'}}</label><br>
+            <label for="title" class="font-weight-bold">Title<span>*</span></label>
+            <input type="text" class="form-control" id="title" formControlName="title" placeholder="Title">
+          </div>
+          <div class="form-group">
+            <label for="startsAt" class="font-weight-bold">starts at<span>*</span></label>
+            <timepicker id="startsAt" [hourStep]="1" [minuteStep]="1" [showSeconds]="true" [secondsStep]="1"
+              formControlName="start"></timepicker>
+          </div>
+          <div class="form-group">
+            <label for="endsAt" class="font-weight-bold">ends at<span>*</span></label>
+            <timepicker id="endsAt" [hourStep]="1" [minuteStep]="1" [showSeconds]="true" [secondsStep]="1"
+              formControlName="end"></timepicker>
+          </div>
+          <div class="form-group">
+            <label for="purpose" class="font-weight-bold">Purpose<span>*</span></label>
+            <input type="text" class="form-control" id="purpose" formControlName="purpose"
+              placeholder="Purpose of meeting">
+          </div>
+          <div class="form-group">
+            <label for="place" class="font-weight-bold">Place<span>*</span></label>
+            <input type="text" class="form-control" id="place" formControlName="place" placeholder="Place of meeting">
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" [disabled]="!detailForm.valid"
+          (click)="confirmAddMeeting()">
+          Confirm
+        </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="modalRef.hide()">
+          Cancel
+        </button>
+      </div>
+    </ng-template>
+
+
+    <ng-template #modalEditMeeting let-close="close">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Meetitng</h5>
+        <button type="button" class="close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="detailForm">
+          <div class="form-group">
+            <label class="font-weight-bold">Selected Date: {{viewDate | date: 'dd/MM/yyyy'}}</label><br>
+            <label for="title" class="font-weight-bold">Title<span>*</span></label>
+            <input type="text" class="form-control" id="title" formControlName="title" placeholder="Title">
+          </div>
+          <div class="form-group">
+            <label for="startsAt" class="font-weight-bold">starts at<span>*</span></label>
+            <timepicker id="startsAt" [hourStep]="1" [minuteStep]="1" [showSeconds]="true" [secondsStep]="1"
+              formControlName="start"></timepicker>
+          </div>
+          <div class="form-group">
+            <label for="endsAt" class="font-weight-bold">ends at<span>*</span></label>
+            <timepicker id="endsAt" [hourStep]="1" [minuteStep]="1" [showSeconds]="true" [secondsStep]="1"
+              formControlName="end"></timepicker>
+          </div>
+          <div class="form-group">
+            <label for="purpose" class="font-weight-bold">Purpose<span>*</span></label>
+            <input type="text" class="form-control" id="purpose" formControlName="purpose"
+              placeholder="Purpose of meeting">
+          </div>
+          <div class="form-group">
+            <label for="place" class="font-weight-bold">Place<span>*</span></label>
+            <input type="text" class="form-control" id="place" formControlName="place" placeholder="Place of meeting">
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" [disabled]="!detailForm.valid"
+          (click)="confirmEditMeeting()">
+          Confirm
+        </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="modalRef.hide()">
+          Cancel
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</body>
+
+</html>

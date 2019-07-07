@@ -1,0 +1,88 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+  <header role="heading">
+    <app-header [userName]="userName"></app-header>
+  </header>
+  <main role="main">
+    <div class="container-fluid pl-5 pr-5">
+      
+      <div class="row minus-header shadow-lg bg-white w-70 m-auto" *ngIf="currentMeeting">
+        <div class="col-sm">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm font-weight-bold">
+                  Organized by
+                </div>
+                <div class="col-sm font-weight-bold text-primary">
+                  {{currentMeeting.createdBy}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm font-weight-bold">
+                  Title
+                </div>
+                <div class="col-sm font-weight-bold text-primary">
+                  {{currentMeeting.title}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm font-weight-bold">
+                  Starts at
+                </div>
+                <div class="col-sm font-weight-bold text-primary">
+                  {{currentMeeting.start | date: 'dd/MM/yyyy HH:mm:ss'}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm font-weight-bold">
+                  Ends at
+                </div>
+                <div class="col-sm font-weight-bold text-primary">
+                  {{currentMeeting.end | date: 'dd/MM/yyyy HH:mm:ss'}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm font-weight-bold">
+                  Purpose
+                </div>
+                <div class="col-sm font-weight-bold text-primary">
+                  {{currentMeeting.purpose}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-sm font-weight-bold">
+                  Place
+                </div>
+                <div class="col-sm font-weight-bold text-primary">
+                  {{currentMeeting.place}}
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <button type="button" class="btn-sm btn-secondary" (click)="goBack()">
+                <i class="fas fa-arrow-left mouse-pointer"></i> Back</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

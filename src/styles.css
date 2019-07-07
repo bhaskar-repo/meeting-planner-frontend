@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+.minus-header {
+    padding-top: 4.5rem;
+}
+
+.cal-day-view .cal-drag-over .cal-hour-segment, .cal-day-view .cal-hour-segment:hover {
+    background-color: #ededed;
+  }

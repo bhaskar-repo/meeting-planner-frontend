@@ -1,0 +1,75 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+  <main role="main">
+    <div class="container-fluid">
+      <div class="row pt-5">
+        <div class="col-sm">
+          <div class="card card-width shadow-lg m-auto">
+            <div class="card-body">
+              <i class="fas fa-arrow-left" style="cursor: pointer" title="Go Back" (click) = "goBack()"></i><br>
+              <h5 class="card-title">Sign Up</h5>
+              <form [formGroup]="signupForm">
+                <div class="form-row">
+                  <div class="form-group col-sm">
+                    <label for="firstName">First Name<span>*</span></label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First Name"
+                      formControlName="firstName">
+                  </div>
+                  <div class="form-group col-sm">
+                    <label for="lastName">Last Name<span>*</span></label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Last Name"
+                      formControlName="lastName">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-sm">
+                    <label for="inputEmail4">Email<span>*</span></label>
+                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
+                      formControlName="email">
+                      <small class="form-text text-muted">enter valid email</small>
+                  </div>
+                  <div class="form-group col-sm">
+                    <label for="inputPassword4">Password<span>*</span></label>
+                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password"
+                      formControlName="password">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-sm">
+                    <label for="inputPassword4">Country<span>*</span></label>
+                    <select id="inputCountry" class="form-control" name="countryCode" formControlName="countryCode"
+                      (change)="onCountryChange()">
+                      <option value="" disabled selected>choose country</option>
+                      <option *ngFor="let currentCountry of countryNamesObj" [ngValue]="currentCountry.countryCode">
+                        {{currentCountry.countryName}}</option>
+                    </select>
+                  </div>
+
+                  <div class="input-group mb-2">
+                    <label class="sr-only" for="inputMobileNumber">Mobile Number<span>*</span></label>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">{{countryPhoneCode}}</div>
+                    </div>
+                    <input type="number" class="form-control" id="inputMobileNumber" placeholder="Mobile Number"
+                      formControlName="mobileNumber" onkeydown="if(this.value.length == 10 && event.keyCode!=8) return false;">
+                  </div>
+
+                </div>
+              </form>
+            </div>
+            <div class="card-body">
+              <button type="button" class="btn btn-primary btn-sm" [disabled]="!signupForm.valid" (click) = "signUp()">sign up</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

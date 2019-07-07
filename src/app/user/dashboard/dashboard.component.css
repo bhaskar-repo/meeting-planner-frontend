@@ -1,0 +1,35 @@
+.button-position {
+    position: fixed;
+    bottom:40px;
+    right:40px;
+    z-index: 1;
+}
+span {
+    color: red;
+  }
+
+mwl-calendar-month-view {
+    cursor: pointer;
+}
+
+.mouse-pointer {
+  cursor: pointer;
+}
+
+.minus-header {
+  padding-top: 4.5rem; 
+}
+
+.ng-valid:not(form)  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+
+@media only screen and (max-width: 300px) {
+  .minus-header {
+    padding-top: 7rem;
+  }
+}

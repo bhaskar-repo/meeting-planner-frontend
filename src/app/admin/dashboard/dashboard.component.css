@@ -1,0 +1,9 @@
+.minus-header {
+    padding-top: 4.5rem; 
+}
+
+@media only screen and (max-width: 300px) {
+    .minus-header {
+      padding-top: 7rem;
+    }
+  }

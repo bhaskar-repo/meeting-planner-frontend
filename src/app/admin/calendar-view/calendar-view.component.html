@@ -1,0 +1,98 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+  <main role="main">
+    <div class="row">
+      <div class="col-md">
+        <i class="fas fa-arrow-left mouse-pointer" (click)="goBack()"> Back</i>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm h-50">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <button class="btn btn-primary button-position" (click)="navigateToDetailView()">
+              create meeting
+            </button>
+            <div class="clearfix"></div>
+            <div class="btn-group">
+              <button class="btn btn-primary" (click)="decrement()" [disabled]="prevBtnDisabled">
+                Previous
+              </button>
+              <button class="btn btn-outline-secondary" (click)="today()">Today</button>
+              <button class="btn btn-primary" (click)="increment()" [disabled]="nextBtnDisabled">
+                Next
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn btn-primary mouse-pointer" (click)="changeView('month')"
+                [class.active]="view === 'month'">
+                Month
+              </div>
+              <div class="btn btn-primary mouse-pointer" (click)="changeView('week')" [class.active]="view === 'week'">
+                Week
+              </div>
+              <div class="btn btn-primary mouse-pointer" (click)="changeView('day')" [class.active]="view === 'day'">
+                Day
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div [ngSwitch]="view">
+          <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+            (beforeViewRender)="beforeMonthViewRender($event)">
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event, $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+          </mwl-calendar-day-view>
+        </div>
+      </div>
+    </div>
+
+    <br />
+
+    <ng-template #modalContent let-close="close">
+      <div class="modal-header">
+        <h5 class="modal-title">Event action occurred</h5>
+        <button type="button" class="close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+          Action:
+          <pre>{{ modalData?.action }}</pre>
+        </div>
+        <div>
+          Event:
+          <pre>{{ modalData?.event | json }}</pre>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modalRef.hide()">
+          OK
+        </button>
+      </div>
+    </ng-template>
+
+  </main>
+</body>
+
+</html>

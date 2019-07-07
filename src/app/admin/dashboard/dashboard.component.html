@@ -1,0 +1,26 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <header role="heading">
+      <app-header [userName]="userName"></app-header>
+    </header>
+    <div class="minus-header">
+      <tabset #staticTabs >
+        <tab heading="users" class="bg-primary">
+          <app-users-list></app-users-list>
+        </tab>
+        <tab heading="Calendar">
+          <app-calendar-view></app-calendar-view>
+        </tab>
+
+      </tabset>
+    </div>
+  </div>
+</body>
+
+</html>

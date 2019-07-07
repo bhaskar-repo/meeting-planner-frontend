@@ -1,0 +1,21 @@
+.card-width {
+    width: 100%;
+    max-width: 500px;
+}
+
+span {
+  color: red;
+}
+
+.ng-valid:not(form)  {
+    border-left: 5px solid #42A948; /* green */
+  }
+  
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+  }
+
+  body {
+    height: 650px;
+    background-image: url('/assets/background.webp');
+  }

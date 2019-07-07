@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark mb-4">
+  <a class="navbar-brand text-white" (click)="navigateToHome()"><strong>Meeting Planner</strong> </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" (click)="navigateToHome()">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <app-first-char [firstChar]="userName[0]"></app-first-char>
+      <label class="text-white ml-2">{{userName}}</label>
+      <button class="btn btn-outline-primary my-2 my-sm-0 ml-2" type="button" (click)="logOut()">Logout</button>
+    </form>
+  </div>
+</nav>
+
+<ng-template #notifyMe let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title"><i class="fas fa-bell">Notification</i> {{notifyData.action}} </h5>
+    <button type="button" class="close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card" style="width: 17rem;">
+      <img src="assets/meeting.jpg" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{notifyData.title}}</h5>
+        <p class="card-text">{{notifyData.createdBy}}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Starts at: {{notifyData.start | date: 'dd/MM/yyyy HH:mm:ss'}}</li>
+        <li class="list-group-item">Ends at: {{notifyData.end | date: 'dd/MM/yyyy HH:mm:ss'}}</li>
+        <li class="list-group-item">Purpose: {{notifyData.purpose}}</li>
+        <li class="list-group-item">Place: {{notifyData.place}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modalRef.hide()">
+      OK
+    </button>
+  </div>
+</ng-template>
