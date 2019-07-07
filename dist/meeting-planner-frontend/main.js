@@ -683,7 +683,9 @@ var CalendarViewComponent = /** @class */ (function () {
             _this._adminMeetingService.getAllMeetings(_this.userId).subscribe(function (apiResponse) {
                 if (_this._global.checkResStatus(apiResponse)) {
                     var meetings = apiResponse.data;
-                    meetings = _this.isOverLappingMeetings(meetings);
+                    if (meetings.length > 1) {
+                        meetings = _this.isOverLappingMeetings(meetings);
+                    }
                     meetings.forEach(function (meeting) {
                         var event = {
                             meetingId: meeting.meetingId,
@@ -2413,7 +2415,9 @@ var DashboardComponent = /** @class */ (function () {
             _this.adminMeetingService.getAllMeetings(userId).subscribe(function (apiResponse) {
                 if (_this._global.checkResStatus(apiResponse)) {
                     var meetings = apiResponse.data; //.filter(meeting => new Date(meeting.start.toString()).getDay() >= new Date().getDay());
-                    meetings = _this.isOverLappingMeetings(meetings);
+                    if (meetings.length > 1) {
+                        meetings = _this.isOverLappingMeetings(meetings);
+                    }
                     var count_1 = 0;
                     meetings.forEach(function (meeting) {
                         var event = {
