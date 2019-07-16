@@ -79,3 +79,25 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Built With
+
+* [NPM](https://www.npmjs.com/) - Most of the modules are used
+* [nodemailer](https://nodemailer.com/about/) - NPM module to send the mails
+* [apiDoc](http://apidocjs.com/) - NPM module to create the apiDoc and eventDoc
+* [nodejs](https://nodejs.org)- Node js to write back end
+
+## Authors
+
+* **Bhaskar Pawar** - *Initial work* - [bhaskarpawar](https://github.com/bhaskar-repo)
+* **Edwisor** - *Problem Statement* - [Edwisor](https://www.edwisor.com)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for detailsg
+
+## Acknowledgments
+
+* Thanks for Edwisor to review this application.
+* I would like to thank whoever supported for implenting this front end for meeting planner application.
+
