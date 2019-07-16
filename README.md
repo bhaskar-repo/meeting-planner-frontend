@@ -10,6 +10,60 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Prerequisites
+ Note : you can skip installation steps if already installed in your system.
+  1. Angular CLI(how to install? <a href="https://cli.angular.io/">NodeJs</a>)
+  
+  2. Install Git (how to install? <a href="https://git-scm.com/downloads">Git Hub</a>)
+
+  
+## running locally
+ 
+ 1. create new folder in your system
+ 2. open that folder in cmd or linux terminal and execute following commands in sequence.
+ 
+ ```
+ > git init
+ > git remote add origin https://github.com/bhaskar-repo/meeting-planner-frontend.git
+ > git pull origin master
+ > npm install
+ ```
+ above commands will pull project to your newly created folder. and npm install will add project dependencies.
+```
+ > ng serve --open
+```
+## More About Application
+Meeting Planner	
+
+Applications has mainly three modules
+ 
+  * **USER MODULE** 
+  * **MEETING MODULE**
+  * **SHARED MODULE**
+  
+  * USER -> it includes sign up,login,requests,activities,friends,find friends functionalities
+		signup -> during sign up user is able to sign up with country and country phone code.
+			   -> added validation for fields like email,password and mobile
+			   -> upon login user will be redirected to login page.
+		login  -> user can login through registered email followed authentication mechanism generating jwt.
+				  client side from validation for gmail and password is added.
+		-> upon login user will see his meetings organized by admin in calendar form
+		-> user can only see his meetings he can not make any updates for view there is a seperate view
+		
+ * MEETING -> Admin user is able to add,edit and delete meeting of the user
+		 -> Admin can edit any user's meeting.from users dashboard.
+		 -> Meetings are shown in calendar form with all functionalities added.
+		
+ * SHARED MODULE -> all the common things requred are kept here,
+				-> header is kept in this module all the major actions have seperated with nav bar links
+				-> http header is a component when any error the user will be redirected to this page
+				-> hanled error with diffrent page.
+				
+ * Exra points -> 
+			- > added icon for each action.
+
+note: i am storing my secretKey in database. need to add an entry for each db connection (secretKey: "") in globalcofig table
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
